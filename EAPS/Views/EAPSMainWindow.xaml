@@ -6,6 +6,7 @@
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
                  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                 xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                  xmlns:local="clr-namespace:EAPS.Views"
                  mc:Ignorable="d"
                  Title="EA Power Supply" Height="450" Width="800">
@@ -44,30 +45,43 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource ButtonWithIconStyle}"
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
                         Width="25"
                         Height="25"
                         Margin="0,0,5,0"
                         ToolTip="Change the background to Dark/Light"
                         Command="{Binding ChangeDarkLightCommand}"
                         VerticalAlignment="Center">
-                <iconPacks:Material Kind="InvertColors" />
-            </Button>
+                    <iconPacks:Material Kind="InvertColors" />
+                </Button>
 
-            <Button Style="{StaticResource ButtonWithIconStyle}"
+                <Button Style="{StaticResource ButtonWithIconStyle}"
                         Width="25"
                         Height="25"
                         Margin="0,0,5,0"
                         ToolTip="Communication settings"
                         Command="{Binding CommunicationSettingsCommand}"
                         VerticalAlignment="Center">
-                <iconPacks:Material Kind="Connection" />
-            </Button>
+                    <iconPacks:Material Kind="Connection" />
+                </Button>
 
-        </StackPanel>
+            </StackPanel>
 
+            <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}"
+                                                              Grid.Column="2"/>
+
+        </Grid>
+
+        <ContentControl Grid.Row="2" Content="{Binding Docking}" Margin="5"/>
 
         <Border Grid.Row="7" Background="{DynamicResource MahApps.Brushes.Accent}">
             <StackPanel Orientation="Horizontal">
