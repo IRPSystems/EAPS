@@ -1,11 +1,11 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using DeviceHandler.ViewModels;
 using EAPS.Models;
 using Entities.Enums;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace EAPS.ViewModels
 {
@@ -27,6 +26,9 @@ namespace EAPS.ViewModels
 
 		public DevicesContainer DevicesContainter { get; set; }
 
+		public DocingViewModel Docking { get; set; }
+		public CommunicationViewModel CommunicationSettings { get; set; }
+
 		#endregion Properties
 
 		#region Fields
@@ -39,6 +41,7 @@ namespace EAPS.ViewModels
 			ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight); 
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 			LoadedCommand = new RelayCommand(Loaded);
+			CommunicationSettingsCommand = new RelayCommand(OpenCommunicationSettings);
 
 
 			Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -79,6 +82,8 @@ namespace EAPS.ViewModels
 
 		#endregion Load/Save EAPSUserData
 
+		#region Closing/Load
+
 		private void Closing(CancelEventArgs e)
 		{
 			SaveEAPSUserData();
@@ -95,14 +100,27 @@ namespace EAPS.ViewModels
 					deviceFullData.CheckCommunication.Dispose();
 				}
 			}
+
+			if (Docking != null)
+				Docking.Close();
 		}
 
 		private void Loaded()
 		{			
-			UpdateSetup();
+			InitDevicesContainter();
+
+			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+			Docking = new DocingViewModel(CommunicationSettings);
 		}
 
-		private void UpdateSetup()
+		#endregion Closing/Load
+
+		private void OpenCommunicationSettings()
+		{
+			Docking.OpenCommSettings();
+		}
+
+		private void InitDevicesContainter()
 		{
 			DevicesContainter = new DevicesContainer();
 			DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
@@ -166,19 +184,15 @@ namespace EAPS.ViewModels
 
 				deviceFullData.Connect();
 			}
-
-
-			
-
-			WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
 		}
 
 		private void ChangeDarkLight()
 		{
-
 			EAPSUserData.IsLightTheme = !EAPSUserData.IsLightTheme;
 			App.ChangeDarkLight(EAPSUserData.IsLightTheme);
-			
+
+			if (Docking != null)
+				Docking.Refresh();
 		}
 
 		#endregion Methods
@@ -188,6 +202,8 @@ namespace EAPS.ViewModels
 		public RelayCommand ChangeDarkLightCommand { get; private set; }
 		public RelayCommand<CancelEventArgs> ClosingCommand { get; private set; }
 		public RelayCommand LoadedCommand { get; private set; }
+
+		public RelayCommand CommunicationSettingsCommand { get; private set; }
 
 		#endregion Commands
 	}
