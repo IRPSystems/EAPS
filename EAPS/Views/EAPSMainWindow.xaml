@@ -1,0 +1,38 @@
+﻿<mah:MetroWindow x:Class="EAPS.Views.EAPSMainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+                 xmlns:local="clr-namespace:EAPS"
+                 mc:Ignorable="d"
+                 Title="EA Power Supply" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+
+        <Border Grid.Row="7" Background="{DynamicResource MahApps.Brushes.Accent}">
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Version: " 
+                           FontSize="16"
+                           FontWeight="DemiBold" 
+                           Foreground="White" 
+                           VerticalAlignment="Center"
+                           Margin="5,0,5,0"/>
+
+                <TextBlock Text="{Binding Version}" 
+                           FontSize="16"
+                           FontWeight="DemiBold" 
+                           Foreground="White" 
+                           VerticalAlignment="Center"
+                           Margin="5,0,0,0"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</mah:MetroWindow>
