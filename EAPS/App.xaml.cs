@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlzEx.Theming;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,12 @@ namespace EAPS
 	/// </summary>
 	public partial class App : Application
 	{
+		public static void ChangeDarkLight(bool isLightTheme)
+		{
+			if (isLightTheme)
+				ThemeManager.Current.ChangeTheme(Current, "Light.Blue");
+			else
+				ThemeManager.Current.ChangeTheme(Current, "Dark.Blue");
+		}
 	}
 }
