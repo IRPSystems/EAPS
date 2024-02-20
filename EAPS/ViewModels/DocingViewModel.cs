@@ -3,6 +3,8 @@
 using Controls.ViewModels;
 using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
+using DeviceSimulators.ViewModels;
+using DeviceSimulators.Views;
 using Syncfusion.Windows.Tools.Controls;
 using System.Windows.Controls;
 
@@ -13,19 +15,21 @@ namespace EAPS.ViewModels
 		#region Fields
 
 		private ContentControl _communicationSettings;
-		
+		private ContentControl _deviceSimulatorsViewModel;
 
 		#endregion Fields
 
 		#region Constructor
 
 		public DocingViewModel(
-			CommunicationViewModel communicationSettings) :
+			CommunicationViewModel communicationSettings,
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel) :
 			base("DockingMain")
 		{
 
 			CreateWindows(
-				communicationSettings);
+				communicationSettings,
+				deviceSimulatorsViewModel);
 		}
 
 		#endregion Constructor
@@ -33,7 +37,8 @@ namespace EAPS.ViewModels
 		#region Methods
 
 		private void CreateWindows(
-			CommunicationViewModel communicationSettings)
+			CommunicationViewModel communicationSettings,
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel)
 		{
 			DockFill = true;
 
@@ -43,6 +48,13 @@ namespace EAPS.ViewModels
 			SetHeader(_communicationSettings, "Communication Settings");
 			SetFloatParams(_communicationSettings);
 			Children.Add(_communicationSettings);
+
+			_deviceSimulatorsViewModel = new ContentControl();
+			DeviceSimulatorsView deviceSimulators = new DeviceSimulatorsView() { DataContext = deviceSimulatorsViewModel };
+			_deviceSimulatorsViewModel.Content = deviceSimulators;
+			SetHeader(_deviceSimulatorsViewModel, "Device Simulators");
+			SetFloatParams(_deviceSimulatorsViewModel);
+			Children.Add(_deviceSimulatorsViewModel);
 		}
 
 		private void SetFloatParams(ContentControl control)
@@ -57,6 +69,11 @@ namespace EAPS.ViewModels
 			SetState(_communicationSettings, DockState.Float);
 		}
 
-#endregion Methods
+		public void OpenDeviceSimulator()
+		{
+			SetState(_deviceSimulatorsViewModel, DockState.Float);
+		}
+
+		#endregion Methods
 	}
 }

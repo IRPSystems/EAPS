@@ -6,6 +6,7 @@ using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
+using DeviceSimulators.ViewModels;
 using EAPS.Models;
 using Entities.Enums;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 
 namespace EAPS.ViewModels
 {
@@ -29,6 +31,8 @@ namespace EAPS.ViewModels
 		public DocingViewModel Docking { get; set; }
 		public CommunicationViewModel CommunicationSettings { get; set; }
 
+		public Visibility SimulationVisibility { get; set; }
+
 		#endregion Properties
 
 		#region Fields
@@ -42,7 +46,12 @@ namespace EAPS.ViewModels
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 			LoadedCommand = new RelayCommand(Loaded);
 			CommunicationSettingsCommand = new RelayCommand(OpenCommunicationSettings);
+			DeviceSimulatorCommand = new RelayCommand(OpenDeviceSimulator);
 
+			SimulationVisibility = Visibility.Collapsed;
+#if DEBUG
+			SimulationVisibility = Visibility.Visible;
+#endif
 
 			Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -110,7 +119,11 @@ namespace EAPS.ViewModels
 			InitDevicesContainter();
 
 			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
-			Docking = new DocingViewModel(CommunicationSettings);
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel =
+					new DeviceSimulatorsViewModel(DevicesContainter);
+			Docking = new DocingViewModel(
+				CommunicationSettings,
+				deviceSimulatorsViewModel);
 		}
 
 		#endregion Closing/Load
@@ -118,6 +131,11 @@ namespace EAPS.ViewModels
 		private void OpenCommunicationSettings()
 		{
 			Docking.OpenCommSettings();
+		}
+
+		private void OpenDeviceSimulator()
+		{
+			Docking.OpenDeviceSimulator();
 		}
 
 		private void InitDevicesContainter()
@@ -204,6 +222,7 @@ namespace EAPS.ViewModels
 		public RelayCommand LoadedCommand { get; private set; }
 
 		public RelayCommand CommunicationSettingsCommand { get; private set; }
+		public RelayCommand DeviceSimulatorCommand { get; private set; }
 
 		#endregion Commands
 	}

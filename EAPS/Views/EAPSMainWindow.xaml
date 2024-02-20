@@ -67,11 +67,22 @@
                 <Button Style="{StaticResource ButtonWithIconStyle}"
                         Width="25"
                         Height="25"
-                        Margin="0,0,5,0"
+                        Margin="0,0,50,0"
                         ToolTip="Communication settings"
                         Command="{Binding CommunicationSettingsCommand}"
                         VerticalAlignment="Center">
                     <iconPacks:Material Kind="Connection" />
+                </Button>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        Margin="0,0,0,0"
+                        ToolTip="Device simulator"
+                        Visibility="{Binding SimulationVisibility}"
+                        Command="{Binding DeviceSimulatorCommand}"
+                        VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="LanConnect" />
                 </Button>
 
             </StackPanel>
