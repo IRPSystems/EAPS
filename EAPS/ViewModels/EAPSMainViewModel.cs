@@ -33,9 +33,14 @@ namespace EAPS.ViewModels
 
 		public Visibility SimulationVisibility { get; set; }
 
+
+
+		public MainViewModel MainVM { get; set; }
+
 		#endregion Properties
 
 		#region Fields
+
 		#endregion Fields
 
 		#region Constructor
@@ -121,9 +126,11 @@ namespace EAPS.ViewModels
 			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainter);
+			MainVM = new MainViewModel(DevicesContainter);
 			Docking = new DocingViewModel(
 				CommunicationSettings,
-				deviceSimulatorsViewModel);
+				deviceSimulatorsViewModel,
+				MainVM);
 		}
 
 		#endregion Closing/Load

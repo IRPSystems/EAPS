@@ -41,6 +41,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition />
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -92,9 +93,9 @@
 
         </Grid>
 
-        <ContentControl Grid.Row="2" Content="{Binding Docking}" Margin="5"/>
+        <local:MainView Grid.Row="2" DataContext="{Binding MainVM}"/>
 
-        <Border Grid.Row="7" Background="{DynamicResource MahApps.Brushes.Accent}">
+        <Border Grid.Row="4" Background="{DynamicResource MahApps.Brushes.Accent}">
             <StackPanel Orientation="Horizontal">
 
                 <TextBlock Text="Version: " 
