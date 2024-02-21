@@ -301,7 +301,7 @@ namespace EAPS.ViewModels
 				iVal = 1;
 			}
 
-			paramRemoteState.Background = Brushes.Yellow;
+			paramRemoteState.Background = Brushes.Orange;
 
 			deviceFullData.DeviceCommunicator.SetParamValue(paramRemoveOnOff, iVal, Callback);
 
