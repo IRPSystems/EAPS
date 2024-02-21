@@ -32,10 +32,10 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 
                 <TextBlock Text="Model" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="{Binding PartNumber}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding PartNumber.Value}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
 
                 <TextBlock Text="S/N" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="{Binding SerialNumber}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding SerialNumber.Value}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
 
             </StackPanel>
 
@@ -44,13 +44,13 @@
                 <TextBlock Text="Max values" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="[" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="DemiBold"/>
 
-                <TextBlock Text="{Binding MaxVoltage}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding MaxVoltage.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
                 <TextBlock Text="V" VerticalAlignment="Center" Margin="0,0,20,0" />
 
-                <TextBlock Text="{Binding MaxCurrent}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding MaxCurrent.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
                 <TextBlock Text="A" VerticalAlignment="Center" Margin="0,0,20,0" />
 
-                <TextBlock Text="{Binding MaxPower}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding MaxPower.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
                 <TextBlock Text="W" VerticalAlignment="Center" Margin="0,0,5,0" />
 
                 <TextBlock Text="]" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="DemiBold"/>
@@ -59,13 +59,13 @@
                 <TextBlock Text="[" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="DemiBold"/>
                 
                 <TextBlock Text="HMI" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding HMIVersion}" VerticalAlignment="Center" Margin="0,0,20,0" />
+                <TextBlock Text="{Binding HMIVersion.Value}" VerticalAlignment="Center" Margin="0,0,20,0" />
 
                 <TextBlock Text="KE" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding KEVersion}" VerticalAlignment="Center" Margin="0,0,20,0" />
+                <TextBlock Text="{Binding KEVersion.Value}" VerticalAlignment="Center" Margin="0,0,20,0" />
 
                 <TextBlock Text="DR" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding DRVersion}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding DRVersion.Value}" VerticalAlignment="Center" />
 
                 <TextBlock Text="]" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="DemiBold"/>
 
@@ -104,13 +104,13 @@
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="6" Text="Voltage" Foreground="White" FontSize="16" />
 
                 <TextBlock Grid.Row="1" Grid.Column="2" 
-                           Text="{Binding ActualVoltage}" 
+                           Text="{Binding ActualVoltage.Value}" 
                            Foreground="White" FontSize="16" 
                            VerticalAlignment="Center"
                            Margin="5,0,0,0"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="V" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SetVoltage}" Margin="2"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SetVoltage.Value}" Margin="2"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="V" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -138,15 +138,15 @@
 
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="6" Text="Current" Foreground="White" FontSize="16" />
 
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualCurrent}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualCurrent.Value}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetCurrent}" Margin="2"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetCurrent.Value}" Margin="2"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="(PS)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetCurrent}" Margin="2"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetCurrent.Value}" Margin="2"/>
                 <TextBlock Grid.Row="3" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -173,15 +173,15 @@
 
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="6" Text="Power" Foreground="White" FontSize="16" />
 
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualPower}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualPower.Value}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetPower}" Margin="2"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetPower.Value}" Margin="2"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="(PS)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetPower}" Margin="2"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetPower.Value}" Margin="2"/>
                 <TextBlock Grid.Row="3" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -204,7 +204,7 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center">
 
-                    <TextBlock.Resources>
+                    <!--<TextBlock.Resources>
 
                         <Style TargetType="TextBlock" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
 
@@ -227,7 +227,7 @@
                             
                         </Style>
                         
-                    </TextBlock.Resources>
+                    </TextBlock.Resources>-->
                     
                 </TextBlock>
                 
@@ -257,19 +257,19 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Mode" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Mode}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Mode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="OP Mode" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding OPMode}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding OPMode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="MS Mode" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding MSMode}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding MSMode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Access" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Access}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Access.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="8" Grid.Column="0" Text="Alarm" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Alarm}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Alarm.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
         </Grid>
 
@@ -301,23 +301,23 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="OVP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding OVP}" />
+            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding OVP.Value}" />
             <TextBlock Grid.Row="0" Grid.Column="4" Text="V" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="0" Grid.Column="6" Text="(EL) OCP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="8" Text="{Binding ELOCP}" />
+            <TextBox Grid.Row="0" Grid.Column="8" Text="{Binding ELOCP.Value}" />
             <TextBlock Grid.Row="0" Grid.Column="10" Text="A" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="0" Grid.Column="12" Text="(EL) OPP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="14" Text="{Binding ELOPP}" />
+            <TextBox Grid.Row="0" Grid.Column="14" Text="{Binding ELOPP.Value}" />
             <TextBlock Grid.Row="0" Grid.Column="16" Text="W" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="2" Grid.Column="6" Text="(PS) OCP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="8" Text="{Binding PSOCP}" />
+            <TextBox Grid.Row="2" Grid.Column="8" Text="{Binding PSOCP.Value}" />
             <TextBlock Grid.Row="2" Grid.Column="10" Text="A" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="2" Grid.Column="12" Text="(PS) OPP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="14" Text="{Binding PSOPP}" />
+            <TextBox Grid.Row="2" Grid.Column="14" Text="{Binding PSOPP.Value}" />
             <TextBlock Grid.Row="2" Grid.Column="16" Text="W" VerticalAlignment="Center" />
 
         </Grid>
