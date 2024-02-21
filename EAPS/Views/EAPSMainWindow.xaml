@@ -9,7 +9,7 @@
                  xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                  xmlns:local="clr-namespace:EAPS.Views"
                  mc:Ignorable="d"
-                 Title="EA Power Supply" Height="450" Width="800">
+                 Title="EA Power Supply" Height="450" Width="1000">
 
     <mah:MetroWindow.Resources>
         <ResourceDictionary>

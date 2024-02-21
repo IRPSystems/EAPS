@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EAPS.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1000" FontSize="14">
+             d:DesignHeight="450" d:DesignWidth="1200" FontSize="14">
     
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Grid.ColumnSpan="3">
@@ -32,10 +32,10 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 
                 <TextBlock Text="Model" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="{Binding PartNumber.Value}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding PartNumber}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
 
                 <TextBlock Text="S/N" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="{Binding SerialNumber.Value}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
+                <TextBlock Text="{Binding SerialNumber}" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="DemiBold"/>
 
             </StackPanel>
 
@@ -59,13 +59,13 @@
                 <TextBlock Text="[" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="DemiBold"/>
                 
                 <TextBlock Text="HMI" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding HMIVersion.Value}" VerticalAlignment="Center" Margin="0,0,20,0" />
+                <TextBlock Text="{Binding HMIVersion}" VerticalAlignment="Center" Margin="0,0,20,0" />
 
                 <TextBlock Text="KE" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding KEVersion.Value}" VerticalAlignment="Center" Margin="0,0,20,0" />
+                <TextBlock Text="{Binding KEVersion}" VerticalAlignment="Center" Margin="0,0,20,0" />
 
                 <TextBlock Text="DR" VerticalAlignment="Center" FontWeight="DemiBold" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding DRVersion.Value}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding DRVersion}" VerticalAlignment="Center" />
 
                 <TextBlock Text="]" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="DemiBold"/>
 

@@ -73,10 +73,6 @@ namespace EAPS.ViewModels
 				_devicesContainer.TypeToDevicesFullData[DeviceTypesEnum.PowerSupplyEA];
 			deviceFullData.ConnectionEvent += DeviceFullData_ConnectionEvent;
 
-			
-
-
-			//ResistenceState = 1;
 
 			RemoteControlCommand = new RelayCommand(RemoteControl);
 
@@ -121,14 +117,7 @@ namespace EAPS.ViewModels
 				if (param.Name == "Alarm")
 					Alarm = param;
 
-				if (param.Name == "Identification")
-				{
-					//PartNumber = "9873496872840928437";
-					//SerialNumber = "089476087049872049385";
-					//HMIVersion = "00.00";
-					//KEVersion = "00.00";
-					//DRVersion = "00.00";
-				}
+				
 
 				if (param.Name == "Max Voltage")
 					MaxVoltage = param;
@@ -154,11 +143,55 @@ namespace EAPS.ViewModels
 
 		private void DeviceFullData_ConnectionEvent()
 		{
-			if (_devicesContainer.DevicesFullDataList[0].DeviceCommunicator.IsInitialized == false)
-				return;
+			if (_devicesContainer.DevicesFullDataList[0].DeviceCommunicator.IsInitialized)
+			{
+				OneTimeReadParams();
+				InitMonitoring();
+			}
+			else
+			{
+				StopMonitoring();
+			}
+
+		}
+
+		private void InitMonitoring()
+		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
 
 
-			OneTimeReadParams();
+			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+			{
+				if (!(param is PowerSupplayEA_ParamData paramData))
+					continue;
+
+				if (paramData.ParamType != ParamTypeEnum.Monitor)
+					continue;
+
+				deviceFullData.ParametersRepository.Add(
+					param, 
+					DeviceHandler.Enums.RepositoryPriorityEnum.Medium, 
+					Callback);
+			}
+		}
+
+		private void StopMonitoring()
+		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+
+
+			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+			{
+				if (!(param is PowerSupplayEA_ParamData paramData))
+					continue;
+
+				if (paramData.ParamType != ParamTypeEnum.Monitor)
+					continue;
+
+				deviceFullData.ParametersRepository.Remove(
+					param,
+					Callback);
+			}
 		}
 
 		private void OneTimeReadParams()
@@ -172,8 +205,11 @@ namespace EAPS.ViewModels
 				if (!(param is PowerSupplayEA_ParamData paramData))
 					continue;
 
-				if (paramData.PramType != ParamTypeEnum.ReadOnce)
+				if (paramData.ParamType != ParamTypeEnum.ReadOnce &&
+					paramData.ParamType != ParamTypeEnum.Setpoint)
+				{
 					continue;
+				}
 
 				deviceFullData.DeviceCommunicator.GetParamValue(param, Callback);
 			}
@@ -182,6 +218,27 @@ namespace EAPS.ViewModels
 
 		private void Callback(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
+			if (param.Name == "Identification")
+			{
+				if (!(param.Value is string idn))
+					return;
+
+				string[] idnParts = idn.Split(',');
+				PartNumber = idnParts[1];
+				SerialNumber = idnParts[2];
+
+				string versions = idnParts[3];
+				string[] versionsList = versions.Split('V');
+
+				string[] hmiVersions = versionsList[1].Split(' ');
+				HMIVersion = hmiVersions[0];
+
+				string[] keVersions = versionsList[1].Split(' ');
+				KEVersion = keVersions[0];
+
+				string[] dvVersions = versionsList[1].Split(' ');
+				DRVersion = dvVersions[0];
+			}
 		}
 
 		private void RemoteControl()
