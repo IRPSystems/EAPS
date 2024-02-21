@@ -222,6 +222,9 @@ namespace EAPS.ViewModels
 
 			if (Docking != null)
 				Docking.Refresh();
+
+			if(MainVM != null)
+				MainVM.ChangeTheme();
 		}
 
 		#endregion Methods

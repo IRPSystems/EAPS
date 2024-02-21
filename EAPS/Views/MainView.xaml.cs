@@ -24,5 +24,5 @@ namespace EAPS.Views
 		{
 			InitializeComponent();
 		}
-	}
+    }
 }

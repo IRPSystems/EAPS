@@ -8,11 +8,18 @@ using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
 using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace EAPS.ViewModels
 {
 	public class MainViewModel : ObservableObject
 	{
+		public enum OPModesEnum { UIR, UIP }
+
 		#region Properties
 
 		public DeviceParameterData ActualVoltage { get; set; }//
@@ -28,12 +35,13 @@ namespace EAPS.ViewModels
 
 		public DeviceParameterData ResistenceState { get; set; }
 
-
+		public DeviceParameterData RemoteState { get; set; }
+		public DeviceParameterData OutputState { get; set; }
 
 		public DeviceParameterData Mode { get; set; }
-		public DeviceParameterData OPMode { get; set; }//
+		public OPModesEnum OPMode { get; set; }//
 		public DeviceParameterData MSMode { get; set; }//
-		public DeviceParameterData Access { get; set; }
+		public string Access { get; set; }
 		public DeviceParameterData Alarm { get; set; }//
 
 		public string PartNumber { get; set; }
@@ -75,8 +83,11 @@ namespace EAPS.ViewModels
 
 
 			RemoteControlCommand = new RelayCommand(RemoteControl);
+			OutputOnOffCommand = new RelayCommand(OutputOnOff);
+			TextBox_KeyUpCommand = new RelayCommand<KeyEventArgs>(TextBox_KeyUp);
 
 			InitParameters();
+			ChangeTheme();
 		}
 
 
@@ -87,6 +98,8 @@ namespace EAPS.ViewModels
 
 		private void InitParameters()
 		{
+			Access = "USB";
+
 			DeviceData eaDevice = _devicesContainer.DevicesList[0];
 			foreach(DeviceParameterData param in eaDevice.ParemetersList) 
 			{
@@ -109,15 +122,16 @@ namespace EAPS.ViewModels
 
 
 				//Mode = "CV";
-				if (param.Name == "OP Mode")
-					OPMode = param;
+				
 				if (param.Name == "MS Mode")
 					MSMode = param;
-				//Access = "Rem USB";
 				if (param.Name == "Alarm")
 					Alarm = param;
 
-				
+				if (param.Name == "Remote state")
+					RemoteState = param;
+				if (param.Name == "Output state")
+					OutputState = param;
 
 				if (param.Name == "Max Voltage")
 					MaxVoltage = param;
@@ -239,11 +253,110 @@ namespace EAPS.ViewModels
 				string[] dvVersions = versionsList[1].Split(' ');
 				DRVersion = dvVersions[0];
 			}
+
+			else if(param.Name == "Remote state")
+			{
+				if(param.Value is string state && state == "REMOTE") 
+				{
+					param.Background = Brushes.Green;
+				}
+				else
+				{
+					param.Background = Brushes.Gray;
+				}
+
+			}
+			else if (param.Name == "Output state")
+			{
+				if (param.Value is string state && state == "ON")
+				{
+					param.Background = Brushes.Green;
+				}
+				else
+				{
+					param.Background = Brushes.Red;
+				}
+
+			}
+			else if (param.Name == "OP Mode")
+			{
+				OPMode = (OPModesEnum)param.Value;
+
+			}
 		}
 
 		private void RemoteControl()
 		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
 
+			DeviceParameterData paramRemoveOnOff = 
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Remote On/Off");
+			DeviceParameterData paramRemoteState =
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Remote state");
+
+			int iVal = 0;
+			if(paramRemoteState.Value is string str &&
+				str == "REMOTE")
+			{
+				iVal = 1;
+			}
+
+			deviceFullData.DeviceCommunicator.SetParamValue(paramRemoveOnOff, iVal, Callback);
+
+		}
+
+		private void OutputOnOff()
+		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+
+			DeviceParameterData paramOutputOnOff =
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Output On/Off");
+			DeviceParameterData paramOutputState =
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Output state");
+
+			int iVal = 0;
+			if (paramOutputState.Value is string str &&
+				str.ToUpper() == "ON")
+			{
+				iVal = 1;
+			}
+
+			deviceFullData.DeviceCommunicator.SetParamValue(paramOutputOnOff, iVal, Callback);
+		}
+
+		private void TextBox_KeyUp(KeyEventArgs e)
+		{
+			if(!(e.Source is TextBox textBox)) 
+				return;
+
+			if(!(textBox.DataContext is DeviceParameterData param)) 
+				return;
+
+			if(e.Key == Key.Enter) 
+			{
+				DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+
+				double dVal;
+				bool res = double.TryParse(param.Value.ToString(), out dVal);
+				if (res == false)
+					return;
+
+				deviceFullData.DeviceCommunicator.SetParamValue(param, dVal, Callback);
+				deviceFullData.DeviceCommunicator.GetParamValue(param, Callback);
+				param.Background = Application.Current.MainWindow.Background;
+				return;
+			}
+
+			param.Background = Brushes.LightBlue;
+		}
+
+
+		public void ChangeTheme()
+		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+
+			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+				param.Background = Application.Current.MainWindow.Background;
 		}
 
 		#endregion Methods
@@ -251,6 +364,8 @@ namespace EAPS.ViewModels
 		#region Commands
 
 		public RelayCommand RemoteControlCommand { get; set; }
+		public RelayCommand OutputOnOffCommand { get; set; }
+		public RelayCommand<KeyEventArgs> TextBox_KeyUpCommand { get; private set; }
 
 		#endregion Commands
 	}

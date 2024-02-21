@@ -3,12 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"  
              xmlns:local="clr-namespace:EAPS.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1200" FontSize="14">
+
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="StateIndicatorTemplate">
+
+            <Border Background="{Binding Background}" 
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray1}" BorderThickness="1">
+
+                <TextBlock Text="{Binding Value}" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            </Border>
+            
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextBoxTemplate">
+
+            <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
+                     Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}">
+
+                <i:Interaction.Triggers>
+
+                    <i:EventTrigger EventName="KeyUp">
+                        <i:InvokeCommandAction Command="{Binding Path=DataContext.TextBox_KeyUpCommand, 
+                                                                Mode=OneWay, 
+                                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                            PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </TextBox>
+
+        </DataTemplate>
+
+    </UserControl.Resources>
     
     <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
@@ -110,7 +148,9 @@
                            Margin="5,0,0,0"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="V" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding SetVoltage.Value}" Margin="2"/>
+                <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding SetVoltage}" Margin="2"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
+
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="V" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -142,11 +182,13 @@
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetCurrent.Value}" Margin="2"/>
+                <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding ELSetCurrent}" Margin="2"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="(PS)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetCurrent.Value}" Margin="2"/>
+                <ContentControl Grid.Row="3" Grid.Column="2" Content="{Binding PSSetCurrent}" Margin="2"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
                 <TextBlock Grid.Row="3" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -177,11 +219,13 @@
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ELSetPower.Value}" Margin="2"/>
+                <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding ELSetPower}" Margin="2"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="(PS)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PSSetPower.Value}" Margin="2"/>
+                <ContentControl Grid.Row="3" Grid.Column="2" Content="{Binding PSSetPower}" Margin="2"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
                 <TextBlock Grid.Row="3" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
             </Grid>
@@ -260,13 +304,13 @@
             <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Mode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="OP Mode" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding OPMode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding OPMode}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="MS Mode" VerticalAlignment="Center" />
             <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding MSMode.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Access" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Access.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
+            <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Access}" VerticalAlignment="Center" FontWeight="DemiBold"/>
 
             <TextBlock Grid.Row="8" Grid.Column="0" Text="Alarm" VerticalAlignment="Center" />
             <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Alarm.Value}" VerticalAlignment="Center" FontWeight="DemiBold"/>
@@ -301,37 +345,54 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="OVP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding OVP.Value}" />
+            <ContentControl Grid.Row="0" Grid.Column="2" Content="{Binding OVP}"
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
             <TextBlock Grid.Row="0" Grid.Column="4" Text="V" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="0" Grid.Column="6" Text="(EL) OCP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="8" Text="{Binding ELOCP.Value}" />
+            <ContentControl Grid.Row="0" Grid.Column="8" Content="{Binding ELOCP}"
+                                ContentTemplate="{StaticResource TextBoxTemplate}" />
             <TextBlock Grid.Row="0" Grid.Column="10" Text="A" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="0" Grid.Column="12" Text="(EL) OPP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="14" Text="{Binding ELOPP.Value}" />
+            <ContentControl Grid.Row="0" Grid.Column="14" Content="{Binding ELOPP}"
+                                ContentTemplate="{StaticResource TextBoxTemplate}" />
             <TextBlock Grid.Row="0" Grid.Column="16" Text="W" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="2" Grid.Column="6" Text="(PS) OCP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="8" Text="{Binding PSOCP.Value}" />
+            <ContentControl Grid.Row="2" Grid.Column="8" Content="{Binding PSOCP}" 
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
             <TextBlock Grid.Row="2" Grid.Column="10" Text="A" VerticalAlignment="Center" />
 
             <TextBlock Grid.Row="2" Grid.Column="12" Text="(PS) OPP" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="14" Text="{Binding PSOPP.Value}" />
+            <ContentControl Grid.Row="2" Grid.Column="14" Content="{Binding PSOPP}" 
+                                ContentTemplate="{StaticResource TextBoxTemplate}"/>
             <TextBlock Grid.Row="2" Grid.Column="16" Text="W" VerticalAlignment="Center" />
 
         </Grid>
 
-        <Grid Grid.Row="4" Grid.Column="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="0" Content="Remote&#x0a;Control" Command="{Binding RemoteControlCommand}"/>
-            
+        <Grid Grid.Row="6" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="5"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" Content="Remote&#x0a;Control" Command="{Binding RemoteControlCommand}"/>
+
+            <ContentControl Grid.Row="0" Grid.Column="2" Content="{Binding RemoteState}"
+                            ContentTemplate="{StaticResource StateIndicatorTemplate}"/>
+
+            <Button Grid.Row="2" Grid.Column="0" Content="Output&#x0a;On/Off" Command="{Binding OutputOnOffCommand}"/>
+
+            <ContentControl Grid.Row="2" Grid.Column="2" Content="{Binding OutputState}"
+                            ContentTemplate="{StaticResource StateIndicatorTemplate}"/>
         </Grid>
             
     </Grid>
