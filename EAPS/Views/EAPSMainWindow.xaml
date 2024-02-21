@@ -94,6 +94,7 @@
         </Grid>
 
         <local:MainView Grid.Row="2" DataContext="{Binding MainVM}"/>
+        <ContentControl Grid.Row="5" Content="{Binding Docking}" Margin="5"/>
 
         <Border Grid.Row="4" Background="{DynamicResource MahApps.Brushes.Accent}">
             <StackPanel Orientation="Horizontal">

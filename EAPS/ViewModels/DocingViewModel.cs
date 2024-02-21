@@ -7,7 +7,9 @@ using DeviceSimulators.ViewModels;
 using DeviceSimulators.Views;
 using EAPS.Views;
 using Syncfusion.Windows.Tools.Controls;
+using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace EAPS.ViewModels
 {
@@ -60,7 +62,15 @@ namespace EAPS.ViewModels
 			SetHeader(_deviceSimulatorsViewModel, "Device Simulators");
 			SetFloatParams(_deviceSimulatorsViewModel);
 			Children.Add(_deviceSimulatorsViewModel);
-			Children.Add(_mainViewModel);
+
+
+			//_mainViewModel = new ContentControl();
+			//MainView mainView = new MainView() { DataContext = mainVM };
+			//_mainViewModel.Content = mainView;
+			//SetState(_mainViewModel, DockState.Dock);
+			//SetSideInDockedMode(_mainViewModel, DockSide.Left); 
+			//SetHeader(_mainViewModel, "");
+			//Children.Add(_mainViewModel);
 		}
 
 		private void SetFloatParams(ContentControl control)
