@@ -170,7 +170,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Alarm",
-        "Cmd": "SYST:ERR?",
+        "Cmd": "SYST:ERR",
         "Max": 0,
         "Units": "V",
         "Value": null,
@@ -212,7 +212,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Remote state",
-        "Cmd": "SYSTEM:LOCK:OWNER?",
+        "Cmd": "SYSTEM:LOCK:OWNER",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -223,7 +223,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Output state",
-        "Cmd": "OUTPut?",
+        "Cmd": "OUTPut",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -241,7 +241,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Identification",
-        "Cmd": "*IDN?",
+        "Cmd": "*IDN",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -252,7 +252,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "OP Mode",
-        "Cmd": "STAT:OPER:COND?",
+        "Cmd": "STAT:OPER:COND",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -263,7 +263,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "MS Mode",
-        "Cmd": "SYSTem:MS:LINK?",
+        "Cmd": "SYSTem:MS:LINK",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -274,7 +274,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Max Voltage",
-        "Cmd": "SYSTem:NOMinal:VOLTage?",
+        "Cmd": "SYSTem:NOMinal:VOLTage",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -285,7 +285,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Max Current",
-        "Cmd": "SYSTem:NOMinal:CURRent?",
+        "Cmd": "SYSTem:NOMinal:CURRent",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
@@ -296,7 +296,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Max Power",
-        "Cmd": "SYSTem:NOMinal:POWer?",
+        "Cmd": "SYSTem:NOMinal:POWer",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,

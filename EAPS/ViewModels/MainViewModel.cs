@@ -1,7 +1,9 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DeviceCommunicators.Enums;
 using DeviceCommunicators.Models;
+using DeviceCommunicators.PowerSupplayEA;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
@@ -152,13 +154,34 @@ namespace EAPS.ViewModels
 
 		private void DeviceFullData_ConnectionEvent()
 		{
+			if (_devicesContainer.DevicesFullDataList[0].DeviceCommunicator.IsInitialized == false)
+				return;
+
+
 			OneTimeReadParams();
 		}
 
 		private void OneTimeReadParams()
 		{
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
 			
 
+			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+			{
+				
+				if (!(param is PowerSupplayEA_ParamData paramData))
+					continue;
+
+				if (paramData.PramType != ParamTypeEnum.ReadOnce)
+					continue;
+
+				deviceFullData.DeviceCommunicator.GetParamValue(param, Callback);
+			}
+
+		}
+
+		private void Callback(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
+		{
 		}
 
 		private void RemoteControl()

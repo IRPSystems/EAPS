@@ -131,6 +131,8 @@ namespace EAPS.ViewModels
 				CommunicationSettings,
 				deviceSimulatorsViewModel,
 				MainVM);
+
+			DevicesContainter.DevicesFullDataList[0].Connect();
 		}
 
 		#endregion Closing/Load
@@ -151,6 +153,7 @@ namespace EAPS.ViewModels
 			DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
 			DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
 			DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
+
 
 			ReadDevicesFileService readDevicesFile = new ReadDevicesFileService();
 			ObservableCollection<DeviceData> deviceList = readDevicesFile.ReadAllFiles(
@@ -201,13 +204,14 @@ namespace EAPS.ViewModels
 				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
 				deviceFullData.Init("EAPS");
+				deviceFullData.InitCheckConnection();
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);
 				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 
-				deviceFullData.Connect();
+				
 			}
 		}
 
