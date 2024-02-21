@@ -17,7 +17,7 @@ namespace EAPS.ViewModels
 	{
 		#region Fields
 
-		private ContentControl _communicationSettings;
+		private ContentControl _settingsViewModel;
 		private ContentControl _deviceSimulatorsViewModel;
 		private ContentControl _mainViewModel;
 
@@ -26,14 +26,16 @@ namespace EAPS.ViewModels
 		#region Constructor
 
 		public DocingViewModel(
-			CommunicationViewModel communicationSettings,
+			//CommunicationViewModel communicationSettings,
+			SettingsViewModel settingsViewModel,
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
 			MainViewModel mainVM) :
 			base("DockingMain")
 		{
 
 			CreateWindows(
-				communicationSettings,
+				//communicationSettings,
+				settingsViewModel,
 				deviceSimulatorsViewModel,
 				mainVM);
 		}
@@ -43,18 +45,19 @@ namespace EAPS.ViewModels
 		#region Methods
 
 		private void CreateWindows(
-			CommunicationViewModel communicationSettings,
+			//CommunicationViewModel communicationSettings,
+			SettingsViewModel settingsViewModel,
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
 			MainViewModel mainVM)
 		{
 			DockFill = true;
 
-			_communicationSettings = new ContentControl();
-			CommunicationView communication = new CommunicationView() { DataContext = communicationSettings };
-			_communicationSettings.Content = communication;
-			SetHeader(_communicationSettings, "Communication Settings");
-			SetFloatParams(_communicationSettings);
-			Children.Add(_communicationSettings);
+			_settingsViewModel = new ContentControl();
+			SettingsView settingsView = new SettingsView() { DataContext = settingsViewModel };
+			_settingsViewModel.Content = settingsView;
+			SetHeader(_settingsViewModel, "Settings");
+			SetFloatParams(_settingsViewModel);
+			Children.Add(_settingsViewModel);
 
 			_deviceSimulatorsViewModel = new ContentControl();
 			DeviceSimulatorsView deviceSimulators = new DeviceSimulatorsView() { DataContext = deviceSimulatorsViewModel };
@@ -80,9 +83,9 @@ namespace EAPS.ViewModels
 			SetState(control, DockState.Hidden);
 		}
 
-		public void OpenCommSettings()
+		public void OpenSettings()
 		{
-			SetState(_communicationSettings, DockState.Float);
+			SetState(_settingsViewModel, DockState.Float);
 		}
 
 		public void OpenDeviceSimulator()

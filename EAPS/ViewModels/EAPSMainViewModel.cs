@@ -37,6 +37,8 @@ namespace EAPS.ViewModels
 
 		public MainViewModel MainVM { get; set; }
 
+		public bool IsConnected { get; set; }
+
 		#endregion Properties
 
 		#region Fields
@@ -50,8 +52,10 @@ namespace EAPS.ViewModels
 			ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight); 
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 			LoadedCommand = new RelayCommand(Loaded);
-			CommunicationSettingsCommand = new RelayCommand(OpenCommunicationSettings);
+			SettingsCommand = new RelayCommand(OpenSettings);
 			DeviceSimulatorCommand = new RelayCommand(OpenDeviceSimulator);
+			ConnectCommand = new RelayCommand(Connect);
+			DisconnectCommand = new RelayCommand(Disconnect);
 
 			SimulationVisibility = Visibility.Collapsed;
 #if DEBUG
@@ -123,12 +127,13 @@ namespace EAPS.ViewModels
 		{			
 			InitDevicesContainter();
 
-			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+			//CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+			SettingsViewModel settingsViewModel = new SettingsViewModel(DevicesContainter);
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainter);
 			MainVM = new MainViewModel(DevicesContainter);
 			Docking = new DocingViewModel(
-				CommunicationSettings,
+				settingsViewModel,
 				deviceSimulatorsViewModel,
 				MainVM);
 
@@ -137,9 +142,9 @@ namespace EAPS.ViewModels
 
 		#endregion Closing/Load
 
-		private void OpenCommunicationSettings()
+		private void OpenSettings()
 		{
-			Docking.OpenCommSettings();
+			Docking.OpenSettings();
 		}
 
 		private void OpenDeviceSimulator()
@@ -211,8 +216,13 @@ namespace EAPS.ViewModels
 				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 
-				
+				deviceFullData.ConnectionEvent += DeviceFullData_ConnectionEvent;
 			}
+		}
+
+		private void DeviceFullData_ConnectionEvent()
+		{
+			IsConnected = DevicesContainter.DevicesFullDataList[0].DeviceCommunicator.IsInitialized;
 		}
 
 		private void ChangeDarkLight()
@@ -227,6 +237,16 @@ namespace EAPS.ViewModels
 				MainVM.ChangeTheme();
 		}
 
+		private void Connect()
+		{
+			DevicesContainter.DevicesFullDataList[0].Connect();
+		}
+
+		private void Disconnect()
+		{
+			DevicesContainter.DevicesFullDataList[0].Disconnect();
+		}
+
 		#endregion Methods
 
 		#region Commands
@@ -235,8 +255,11 @@ namespace EAPS.ViewModels
 		public RelayCommand<CancelEventArgs> ClosingCommand { get; private set; }
 		public RelayCommand LoadedCommand { get; private set; }
 
-		public RelayCommand CommunicationSettingsCommand { get; private set; }
+		public RelayCommand SettingsCommand { get; private set; }
 		public RelayCommand DeviceSimulatorCommand { get; private set; }
+
+		public RelayCommand ConnectCommand { get; private set; }
+		public RelayCommand DisconnectCommand { get; private set; }
 
 		#endregion Commands
 	}

@@ -143,7 +143,7 @@
 
                 <TextBlock Grid.Row="1" Grid.Column="2" 
                            Text="{Binding ActualVoltage.Value}" 
-                           Foreground="White" FontSize="16" 
+                           Foreground="White" FontSize="18" 
                            VerticalAlignment="Center"
                            Margin="5,0,0,0"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="V" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
@@ -178,7 +178,7 @@
 
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="6" Text="Current" Foreground="White" FontSize="16" />
 
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualCurrent.Value}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualCurrent.Value}" Foreground="White" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="A" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
@@ -215,7 +215,7 @@
 
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="6" Text="Power" Foreground="White" FontSize="16" />
 
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualPower.Value}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ActualPower.Value}" Foreground="White" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="W" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="(EL)" Foreground="White" FontSize="16"  VerticalAlignment="Center"/>

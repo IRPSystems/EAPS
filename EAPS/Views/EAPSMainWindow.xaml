@@ -7,6 +7,7 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
                  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                  xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
+                 xmlns:converters="clr-namespace:Converters;assembly=Converters"
                  xmlns:local="clr-namespace:EAPS.Views"
                  mc:Ignorable="d"
                  Title="EA Power Supply" Height="450" Width="1000">
@@ -16,6 +17,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ButtonWithIcon.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
@@ -69,11 +72,36 @@
                         Width="25"
                         Height="25"
                         Margin="0,0,50,0"
-                        ToolTip="Communication settings"
-                        Command="{Binding CommunicationSettingsCommand}"
+                        ToolTip="Settings"
+                        Command="{Binding SettingsCommand}"
                         VerticalAlignment="Center">
-                    <iconPacks:Material Kind="Connection" />
+                    <iconPacks:PackIconOcticons Kind="Gear" />
                 </Button>
+
+                <Grid Margin="0,0,50,0">
+                    
+                    <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"                        
+                        ToolTip="Connect"
+                        Command="{Binding ConnectCommand}"
+                        VerticalAlignment="Center">
+                        <iconPacks:PackIconModern Kind="Disconnect" />                        
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonWithIconStyle}"
+                            Width="25"
+                            Height="25"                        
+                            ToolTip="Disconnect"
+                            Command="{Binding DisconnectCommand}"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <iconPacks:PackIconModern Kind="Connect" />                        
+                    </Button>
+
+                </Grid>
+                
+                
 
                 <Button Style="{StaticResource ButtonWithIconStyle}"
                         Width="25"
