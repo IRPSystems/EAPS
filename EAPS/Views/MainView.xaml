@@ -25,7 +25,9 @@
         <DataTemplate x:Key="TextBoxTemplate">
 
             <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
-                     Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}">
+                     Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}"
+                     Foreground="{Binding Foreground}"
+                     IsReadOnly="{Binding IsTextBoxReadOnly, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
 
                 <i:Interaction.Triggers>
 

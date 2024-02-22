@@ -61,6 +61,10 @@ namespace EAPS.ViewModels
 		public DeviceParameterData PSOCP { get; set; }//
 		public DeviceParameterData PSOPP { get; set; }//
 
+
+
+		public bool IsTextBoxReadOnly { get; set; }
+
 		#endregion Properties
 
 
@@ -280,8 +284,26 @@ namespace EAPS.ViewModels
 			}
 			else if (param.Name == "OP Mode")
 			{
-				OPMode = (OPModesEnum)param.Value;
+				if(param.Value != null)
+					OPMode = (OPModesEnum)param.Value;
 
+			}
+
+
+
+			if(param is PowerSupplayEA_ParamData eaParam &&
+				eaParam.ParamType == ParamTypeEnum.Setpoint)
+			{
+				if(result == CommunicatorResultEnum.OK)
+				{
+					param.Background = Application.Current.MainWindow.Background;
+					param.Foreground = Application.Current.MainWindow.Foreground;
+				}
+				else
+				{
+					param.Background = Brushes.Red;
+					param.Foreground = Brushes.White;
+				}
 			}
 		}
 
@@ -295,11 +317,17 @@ namespace EAPS.ViewModels
 				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Remote state");
 
 			int iVal = 0;
-			if(paramRemoteState.Value is string str &&
+			if (paramRemoteState.Value is string str &&
 				str == "REMOTE")
 			{
+				SetRemote(false);
 				iVal = 1;
 			}
+			else
+			{
+				SetRemote(true);
+			}
+
 
 			paramRemoteState.Background = Brushes.Orange;
 
@@ -339,6 +367,8 @@ namespace EAPS.ViewModels
 			if(e.Key == Key.Enter) 
 			{
 				DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+				if (deviceFullData.DeviceCommunicator.IsInitialized == false)
+					return;
 
 				double dVal;
 				bool res = double.TryParse(param.Value.ToString(), out dVal);
@@ -346,8 +376,7 @@ namespace EAPS.ViewModels
 					return;
 
 				deviceFullData.DeviceCommunicator.SetParamValue(param, dVal, Callback);
-				deviceFullData.DeviceCommunicator.GetParamValue(param, Callback);
-				param.Background = Application.Current.MainWindow.Background;
+				
 				return;
 			}
 
@@ -360,7 +389,37 @@ namespace EAPS.ViewModels
 			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
 
 			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+			{
 				param.Background = Application.Current.MainWindow.Background;
+				param.Foreground = Application.Current.MainWindow.Foreground;
+			}
+		}
+
+		private void SetRemote(bool isRemote)
+		{
+			IsTextBoxReadOnly = !isRemote;
+
+			DeviceFullData deviceFullData = _devicesContainer.DevicesFullDataList[0];
+
+			foreach (DeviceParameterData param in deviceFullData.Device.ParemetersList)
+			{
+				if (!(param is PowerSupplayEA_ParamData eaParam))
+					continue;
+
+				if (eaParam.ParamType != ParamTypeEnum.Setpoint)
+					continue;
+
+				if(isRemote && param.Background == Brushes.Gray) 
+				{
+					param.Background = Application.Current?.MainWindow?.Background;
+					param.Foreground = Application.Current?.MainWindow?.Foreground;
+				}
+				else
+				{
+					param.Background = Brushes.Gray;
+					param.Foreground = Brushes.White;
+				}
+			}
 		}
 
 		#endregion Methods

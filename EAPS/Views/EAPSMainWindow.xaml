@@ -10,7 +10,7 @@
                  xmlns:converters="clr-namespace:Converters;assembly=Converters"
                  xmlns:local="clr-namespace:EAPS.Views"
                  mc:Ignorable="d"
-                 Title="EA Power Supply" Height="450" Width="1000">
+                 Title="EA Power Supply" Height="470" Width="1000">
 
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
