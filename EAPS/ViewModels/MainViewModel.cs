@@ -72,6 +72,8 @@ namespace EAPS.ViewModels
 
 		private DevicesContainer _devicesContainer;
 
+		private bool _isSetRemote;
+
 		#endregion Fileds
 
 
@@ -89,6 +91,8 @@ namespace EAPS.ViewModels
 			RemoteControlCommand = new RelayCommand(RemoteControl);
 			OutputOnOffCommand = new RelayCommand(OutputOnOff);
 			TextBox_KeyUpCommand = new RelayCommand<KeyEventArgs>(TextBox_KeyUp);
+
+			_isSetRemote = true;
 
 			InitParameters();
 			ChangeTheme();
@@ -263,10 +267,14 @@ namespace EAPS.ViewModels
 				if(param.Value is string state && state == "REMOTE") 
 				{
 					param.Background = Brushes.Green;
+					if (_isSetRemote)
+						SetRemote(true);
 				}
 				else
 				{
 					param.Background = Brushes.Gray;
+					if (_isSetRemote)
+						SetRemote(false);
 				}
 
 			}
@@ -294,16 +302,27 @@ namespace EAPS.ViewModels
 			if(param is PowerSupplayEA_ParamData eaParam &&
 				eaParam.ParamType == ParamTypeEnum.Setpoint)
 			{
-				if(result == CommunicatorResultEnum.OK)
+				Application.Current.Dispatcher.Invoke(() =>
 				{
-					param.Background = Application.Current.MainWindow.Background;
-					param.Foreground = Application.Current.MainWindow.Foreground;
-				}
-				else
-				{
-					param.Background = Brushes.Red;
-					param.Foreground = Brushes.White;
-				}
+					if (result == CommunicatorResultEnum.OK)
+					{
+						if (RemoteState.Value is string str && str == "REMOTE")
+						{
+							param.Background = Application.Current.MainWindow.Background;
+							param.Foreground = Application.Current.MainWindow.Foreground;
+						}
+						else
+						{
+							param.Background = Brushes.Gray;
+							param.Foreground = Brushes.White;
+						}
+					}
+					else
+					{
+						param.Background = Brushes.Red;
+						param.Foreground = Brushes.White;
+					}
+				});
 			}
 		}
 
@@ -320,16 +339,12 @@ namespace EAPS.ViewModels
 			if (paramRemoteState.Value is string str &&
 				str == "REMOTE")
 			{
-				SetRemote(false);
 				iVal = 1;
-			}
-			else
-			{
-				SetRemote(true);
 			}
 
 
 			paramRemoteState.Background = Brushes.Orange;
+			_isSetRemote = true;
 
 			deviceFullData.DeviceCommunicator.SetParamValue(paramRemoveOnOff, iVal, Callback);
 
@@ -362,6 +377,9 @@ namespace EAPS.ViewModels
 				return;
 
 			if(!(textBox.DataContext is DeviceParameterData param)) 
+				return;
+
+			if (IsTextBoxReadOnly == true)
 				return;
 
 			if(e.Key == Key.Enter) 
@@ -409,17 +427,25 @@ namespace EAPS.ViewModels
 				if (eaParam.ParamType != ParamTypeEnum.Setpoint)
 					continue;
 
-				if(isRemote && param.Background == Brushes.Gray) 
+				if (param.Background == Brushes.Red)
+					return;
+
+				Application.Current.Dispatcher.Invoke(() =>
 				{
-					param.Background = Application.Current?.MainWindow?.Background;
-					param.Foreground = Application.Current?.MainWindow?.Foreground;
-				}
-				else
-				{
-					param.Background = Brushes.Gray;
-					param.Foreground = Brushes.White;
-				}
+					if (isRemote)
+					{
+						param.Background = Application.Current?.MainWindow?.Background;
+						param.Foreground = Application.Current?.MainWindow?.Foreground;
+					}
+					else 
+					{
+						param.Background = Brushes.Gray;
+						param.Foreground = Brushes.White;
+					}
+				});
 			}
+
+			_isSetRemote = false;
 		}
 
 		#endregion Methods
