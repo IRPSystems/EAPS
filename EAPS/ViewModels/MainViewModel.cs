@@ -240,7 +240,10 @@ namespace EAPS.ViewModels
 
 		private void Callback(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
-			if (param.Name == "Identification")
+			if (!(param is PowerSupplayEA_ParamData eaParam))
+				return;
+
+			if (eaParam.Cmd == "*IDN")
 			{
 				if (!(param.Value is string idn))
 					return;
@@ -262,7 +265,7 @@ namespace EAPS.ViewModels
 				DRVersion = dvVersions[0];
 			}
 
-			else if(param.Name == "Remote state")
+			else if(eaParam.Cmd == "SYSTEM:LOCK:OWNER")
 			{
 				if(param.Value is string state && state == "REMOTE") 
 				{
@@ -278,7 +281,7 @@ namespace EAPS.ViewModels
 				}
 
 			}
-			else if (param.Name == "Output state")
+			else if (eaParam.Cmd == "OUTPut")
 			{
 				if (param.Value is string state && state == "ON")
 				{
@@ -290,7 +293,7 @@ namespace EAPS.ViewModels
 				}
 
 			}
-			else if (param.Name == "OP Mode")
+			else if (eaParam.Cmd == "STAT:OPER:COND")
 			{
 				if(param.Value != null)
 					OPMode = (OPModesEnum)param.Value;
@@ -299,8 +302,7 @@ namespace EAPS.ViewModels
 
 
 
-			if(param is PowerSupplayEA_ParamData eaParam &&
-				eaParam.ParamType == ParamTypeEnum.Setpoint)
+			if(eaParam.ParamType == ParamTypeEnum.Setpoint)
 			{
 				Application.Current.Dispatcher.Invoke(() =>
 				{
@@ -335,17 +337,18 @@ namespace EAPS.ViewModels
 			DeviceParameterData paramRemoteState =
 				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Remote state");
 
-			int iVal = 0;
+			int iVal = 1;
 			if (paramRemoteState.Value is string str &&
 				str == "REMOTE")
 			{
-				iVal = 1;
+				iVal = 0;
 			}
 
 
 			paramRemoteState.Background = Brushes.Orange;
 			_isSetRemote = true;
 
+			paramRemoveOnOff.Value = iVal;
 			deviceFullData.DeviceCommunicator.SetParamValue(paramRemoveOnOff, iVal, Callback);
 
 		}
