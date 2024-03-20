@@ -14,6 +14,14 @@ namespace EAPS
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+				"MzEyMTgxNUAzMjM0MmUzMDJlMzBQNU0vejdSQmVGc1psckxrbSt5UEU0NFNmRzlQajBYTVNnS2c4MkVzdjNzPQ==");
+
+		}
+
+
 		public static void ChangeDarkLight(bool isLightTheme)
 		{
 			if (isLightTheme)

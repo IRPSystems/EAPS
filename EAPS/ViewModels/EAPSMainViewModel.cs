@@ -30,6 +30,7 @@ namespace EAPS.ViewModels
 
 		public DocingViewModel Docking { get; set; }
 		public CommunicationViewModel CommunicationSettings { get; set; }
+		public SettingsViewModel SettingsViewModel { get; set; }
 
 		public Visibility SimulationVisibility { get; set; }
 
@@ -128,12 +129,12 @@ namespace EAPS.ViewModels
 			InitDevicesContainter();
 
 			//CommunicationSettings = new CommunicationViewModel(DevicesContainter);
-			SettingsViewModel settingsViewModel = new SettingsViewModel(DevicesContainter);
+			SettingsViewModel = new SettingsViewModel(DevicesContainter);
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainter);
 			MainVM = new MainViewModel(DevicesContainter);
 			Docking = new DocingViewModel(
-				settingsViewModel,
+				SettingsViewModel,
 				deviceSimulatorsViewModel,
 				MainVM);
 

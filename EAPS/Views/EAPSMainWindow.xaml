@@ -54,6 +54,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
@@ -116,8 +118,28 @@
 
             </StackPanel>
 
+            
+            
+            <Border Name="bd"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray1}" 
+                    BorderThickness="1"
+                    Background="White"
+                    Width="75"
+                    Margin="2"
+                    Grid.Column="2">
+
+                <TextBlock Name="tb"
+                           Text="{Binding DevicesContainter.DevicesFullDataList[0].ConnectionViewModel.SelectedCommType}" 
+                           Foreground="Black"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           FontWeight="DemiBold"
+                           TextWrapping="Wrap"
+                           ToolTip="{Binding CommErrDescription}"/>
+
+            </Border>
+
             <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}"
-                                                              Grid.Column="2"/>
+                                                              Grid.Column="4"/>
 
         </Grid>
 
