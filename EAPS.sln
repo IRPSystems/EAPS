@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converters", "Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceSimulators", "DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj", "{8CA6A5B9-CC2E-4458-95C0-2E98351AD622}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBCFileParser", "..\Infrastructure\DBCFileParser\DBCFileParser.csproj", "{3330DC4D-F6AC-4FB9-9430-A3A6F2BFA9A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBCFileParser", "Infrastructure\DBCFileParser\DBCFileParser.csproj", "{5FBC84D2-6BB3-4B6F-8A57-A2C2BCA03CC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,10 @@ Global
 		{8CA6A5B9-CC2E-4458-95C0-2E98351AD622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA6A5B9-CC2E-4458-95C0-2E98351AD622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CA6A5B9-CC2E-4458-95C0-2E98351AD622}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3330DC4D-F6AC-4FB9-9430-A3A6F2BFA9A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3330DC4D-F6AC-4FB9-9430-A3A6F2BFA9A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3330DC4D-F6AC-4FB9-9430-A3A6F2BFA9A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3330DC4D-F6AC-4FB9-9430-A3A6F2BFA9A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FBC84D2-6BB3-4B6F-8A57-A2C2BCA03CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FBC84D2-6BB3-4B6F-8A57-A2C2BCA03CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FBC84D2-6BB3-4B6F-8A57-A2C2BCA03CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FBC84D2-6BB3-4B6F-8A57-A2C2BCA03CC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

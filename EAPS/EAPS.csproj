@@ -23,6 +23,7 @@
     <ProjectReference Include="..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
     <ProjectReference Include="..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
     <ProjectReference Include="..\Infrastructure\Controls\Controls.csproj" />
+    <ProjectReference Include="..\Infrastructure\DBCFileParser\DBCFileParser.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
